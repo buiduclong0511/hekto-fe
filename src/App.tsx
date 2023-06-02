@@ -6,8 +6,18 @@ function App() {
     return (
         <div>
             <Routes>
-                {routes.map(({ path, element: Element }, index) => {
-                    return <Route key={index} path={path} element={<Element />} />;
+                {routes.map(({ path, element: Element, layout: Layout }, index) => {
+                    return (
+                        <Route
+                            key={index}
+                            path={path}
+                            element={
+                                <Layout>
+                                    <Element />
+                                </Layout>
+                            }
+                        />
+                    );
                 })}
             </Routes>
         </div>
