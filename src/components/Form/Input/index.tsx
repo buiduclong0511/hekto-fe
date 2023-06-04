@@ -17,6 +17,10 @@ const Input: React.FC<IProps> = ({ label, error, touched, ...inputProps }) => {
 
 const Wrapper = styled.div``;
 
-const ErrorMessage = styled.p``;
+const ErrorMessage = styled.p`
+    padding-top: 4px;
+    font-size: 1.3rem;
+    color: #fb3e3e;
+`;
 
 export default Input;

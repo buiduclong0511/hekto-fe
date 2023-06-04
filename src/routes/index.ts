@@ -9,24 +9,13 @@ import Payment from "../pages/Payment";
 import ProductDetail from "../pages/ProductDetail";
 import Register from "../pages/Register";
 import SearchResult from "../pages/SearchResult";
+import path from "./path";
 
 interface IRoute {
     path: string;
     element: React.FC;
     layout: React.FC<React.PropsWithChildren>;
 }
-
-export const path = {
-    home: "/",
-    login: "/login",
-    register: "/register",
-    searchResult: "/search",
-    productDetail: "/product/:id",
-    cart: "/cart",
-    payment: "/payment",
-    orderCompleted: "/order-completed",
-    aboutUs: "/about-us",
-};
 
 const routes: IRoute[] = [
     {
