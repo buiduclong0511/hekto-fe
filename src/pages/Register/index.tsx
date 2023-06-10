@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 
 import Input from "../../components/Form/Input";
@@ -7,8 +7,16 @@ import Button from "../../components/Form/Button";
 import FormGroup from "../../components/Form/FormGroup";
 import path from "../../routes/path";
 import { registerSchema } from "../../validation";
+import axios from "axios";
+import { toast } from "react-toastify";
+import storage from "../../helpers/storage";
+import { STORAGE_KEYS } from "../../constants";
+import axiosClient from "../../api";
+import authApi from "../../api/auth";
 
 function Register() {
+    const navigate = useNavigate();
+
     const { values, errors, touched, handleChange, handleBlur, handleSubmit } = useFormik({
         initialValues: {
             firstName: "",
@@ -17,8 +25,19 @@ function Register() {
             password: "",
             confirmPassword: "",
         },
-        onSubmit: (values) => {
-            console.log(values);
+        onSubmit: async (values) => {
+            try {
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const { confirmPassword, ...body } = values;
+
+                const res = await authApi.register(body);
+                storage.set(STORAGE_KEYS.ACCESS_TOKEN, res.data.accessToken);
+                storage.set(STORAGE_KEYS.REFRESH_TOKEN, res.data.refreshToken);
+
+                navigate(path.home, { replace: true });
+            } catch (err) {
+                toast.error("Have an error");
+            }
         },
         validationSchema: registerSchema,
     });
@@ -94,7 +113,7 @@ function Register() {
                     <Button type="submit">Register</Button>
                 </FormGroup>
                 <p className="navigate-message">
-                    Don’t have an Account? <Link to={path.login}>Create account</Link>
+                    Have an Account? <Link to={path.login}>Login</Link>
                 </p>
             </Form>
         </Wrapper>
