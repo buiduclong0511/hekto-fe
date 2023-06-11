@@ -1,11 +1,11 @@
 import axiosClient from ".";
-import { ILogin, IRegister } from "../interfaces";
+import { ILoginRequest, IRegisterRequest } from "../interfaces";
 
 const authApi = {
-    register(body: IRegister) {
+    register(body: IRegisterRequest) {
         return axiosClient.post("/auth/register", body);
     },
-    login(body: ILogin) {
+    login(body: ILoginRequest) {
         return axiosClient.post("/auth/login", body);
     },
     getCurrentUser() {

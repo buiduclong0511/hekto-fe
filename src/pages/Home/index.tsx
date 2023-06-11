@@ -1,10 +1,19 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
-import authApi from "../../api/auth";
+import { IProduct } from "../../interfaces";
+import productApi from "../../api/product";
 
-function Home() {
+const Home: React.FC = () => {
+    const [featureProducts, setFeatureProducts] = useState<IProduct[]>([]);
+    const [latestProducts, setLatestProducts] = useState<IProduct[]>([]);
+    const [trendingProducts, setTrendingProducts] = useState<IProduct[]>([]);
+
     useEffect(() => {
-        authApi.getCurrentUser().then(console.log);
+        productApi.getCombineProducts().then((res) => {
+            setFeatureProducts(res.data.featureProducts);
+            setLatestProducts(res.data.latestProducts);
+            setTrendingProducts(res.data.trendingProducts);
+        });
     }, []);
 
     return (
@@ -12,6 +21,6 @@ function Home() {
             <h1>Home page</h1>
         </div>
     );
-}
+};
 
 export default Home;

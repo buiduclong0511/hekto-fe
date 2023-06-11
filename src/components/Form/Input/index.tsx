@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
-    label: string;
+    label?: string;
     error?: string;
     touched?: boolean;
 }
